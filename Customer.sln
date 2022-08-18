@@ -5,11 +5,11 @@ VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D937C662-7B90-4A7E-87B4-DE48C808A917}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerProj", "src\CustomerProj\CustomerProj.csproj", "{4C136E28-44BA-4C0F-9E4E-8292C3627655}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerProj", "src\CustomerProj\CustomerProj.csproj", "{4C136E28-44BA-4C0F-9E4E-8292C3627655}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6C140A34-7905-4726-AFBA-719C4B880F58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerProj", "test\CustomerProj\CustomerProj.csproj", "{B1A13B89-CA28-4A25-8837-4F5C1B8A859A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerProj.Tests", "test\CustomerProj\CustomerProj.Tests.csproj", "{B1A13B89-CA28-4A25-8837-4F5C1B8A859A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
