@@ -8,6 +8,7 @@ namespace CustomerProj.Entities
 {
     public enum AddressType
     {
+        Unknown,
         Shipping,
         Billing
     }
