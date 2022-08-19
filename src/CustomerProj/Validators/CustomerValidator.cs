@@ -16,7 +16,6 @@ namespace CustomerProj.Validators
         private const int TotalPurchasesMinAmountValue = 0;
         public CustomerValidator()
         {
-
             RuleFor(c => c.FirstName)
                .MaximumLength(50).WithMessage(ErrorMessages.FirstNameMaxLenghtException);
             RuleFor(c => c.LastName)
@@ -31,7 +30,7 @@ namespace CustomerProj.Validators
             RuleFor(c => c.Notes)
                .NotEmpty().WithMessage(ErrorMessages.NotesNotEnoughException);
             RuleFor(c => c.TotalPurchasesAmount)
-                .LessThan(TotalPurchasesMinAmountValue).WithMessage(ErrorMessages.IncorrectTotalPurchasesAmountValue); ;
+                .GreaterThan(TotalPurchasesMinAmountValue).WithMessage(ErrorMessages.IncorrectTotalPurchasesAmountValue);
         }
     }
 }

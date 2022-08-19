@@ -52,7 +52,7 @@ namespace CustomerProj
                 Addresses = new List<Address>(),
                 PhoneNumber = "+1508dfgdfg78682dfgfdgdf",
                 Email = "myMail",
-                Notes = new List<string> { },
+                Notes = new List<string>{},
                 TotalPurchasesAmount = -1
             };
             var result = customerValidator.TestValidate(customer);
@@ -64,6 +64,7 @@ namespace CustomerProj
             result.ShouldHaveValidationErrorFor(x => x.PhoneNumber);
             result.ShouldHaveValidationErrorFor(x => x.Email);
             result.ShouldHaveValidationErrorFor(x => x.Notes);
+            result.ShouldHaveValidationErrorFor(x => x.TotalPurchasesAmount);
 
         }
     }
