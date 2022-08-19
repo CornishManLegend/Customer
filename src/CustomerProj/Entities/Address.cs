@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,23 +9,35 @@ namespace CustomerProj.Entities
 {
     public class Address
     {
+        public string AddressLine1;
+        public string AddressLine2;
+        public string City;
+        public AddressType AddressType;
+        public string PostalCode;
+        public string State;
+        public string Country;
+
+        public Address(AddressCreateParams addressCreateParams)
+        {
+            AddressLine1 = addressCreateParams.AddressLine1;
+            AddressLine2 = addressCreateParams.AddressLine2;
+            AddressType = addressCreateParams.AddressTypeParam;
+            City = addressCreateParams.City;
+            PostalCode = addressCreateParams.PostalCode;
+            State = addressCreateParams.State;
+            Country = addressCreateParams.Country;
+        }
+
+    }
+
+    public class AddressCreateParams
+    {
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string City { get; set; }
-        public AddressType AddressType { get; set; } = AddressType.Unknown;
+        public AddressType AddressTypeParam { get; set; } = AddressType.Unknown;
         public string PostalCode { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
-
-        public Address(string addressLine, string addressLine2, AddressType addressType, string city, string postalCode, string state, string country)
-        {
-            AddressLine1 = addressLine;
-            AddressLine2 = addressLine2;
-            AddressType = addressType;
-            City = city;
-            PostalCode = postalCode;
-            State = state;
-            Country = country;
-        }
     }
 }

@@ -8,15 +8,26 @@ namespace CustomerProj
 {
     public class CustomerTests
     {
-        private CustomerValidator customerValidator = new CustomerValidator();
 
+        public CustomerValidator customerValidator = new CustomerValidator();
 
         [Fact]
         public void ShouldCreateCustomer()
         {
+
+            AddressCreateParams addressCreateParams = new AddressCreateParams();
+            addressCreateParams.AddressLine1 = "Mulholland Drive";
+            addressCreateParams.AddressLine2 = "13/1";
+            addressCreateParams.AddressTypeParam = AddressType.Shipping;
+            addressCreateParams.City = "Los Angeles";
+            addressCreateParams.PostalCode = "90012";
+            addressCreateParams.State = "Mulholland Drive";
+            addressCreateParams.Country = "USA";
+            Address addressNumber1 = new Address(addressCreateParams);
+
             List<Address> customerAddresses = new List<Address>();
-            Address addressNumber1 = new Address("Mulholland Drive", "13/1", AddressType.Shipping, "Los Angeles", "90012", "California", "USA");
             customerAddresses.Add(addressNumber1);
+
             List<string> testNotes = new List<string>();
             testNotes.Add("some note");
 
@@ -45,7 +56,9 @@ namespace CustomerProj
         {
             string str = new string('A', 51);
 
-            Customer customer = new Customer()
+            
+
+        Customer customer = new Customer()
             {
                 FirstName = str,
                 LastName = str,
@@ -55,7 +68,8 @@ namespace CustomerProj
                 Notes = new List<string>{},
                 TotalPurchasesAmount = -1
             };
-            var result = customerValidator.TestValidate(customer);
+            
+        var result = customerValidator.TestValidate(customer);
 
             result.ShouldHaveValidationErrorFor(x => x.FirstName);
             result.ShouldHaveValidationErrorFor(x => x.LastName);

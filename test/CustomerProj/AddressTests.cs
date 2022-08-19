@@ -15,7 +15,16 @@ namespace CustomerProj.Tests
         [Fact]
         public void ShouldCreateAddress()
         {
-            Address addressNumber1 = new Address("Mulholland Drive", "13/1", AddressType.Shipping, "Los Angeles", "90012", "California", "USA");
+
+            AddressCreateParams addressCreateParams = new AddressCreateParams();
+            addressCreateParams.AddressLine1 = "Mulholland Drive";
+            addressCreateParams.AddressLine2 = "13/1";
+            addressCreateParams.AddressTypeParam = AddressType.Shipping;
+            addressCreateParams.City = "Los Angeles";
+            addressCreateParams.PostalCode = "90012";
+            addressCreateParams.State = "California";
+            addressCreateParams.Country = "USA";
+            Address addressNumber1 = new Address(addressCreateParams);
 
             Assert.NotNull(addressNumber1);
             Assert.Equal("Mulholland Drive", addressNumber1.AddressLine1);
@@ -30,7 +39,16 @@ namespace CustomerProj.Tests
         [Fact]
         public void SetParametersOneWhenShouldThrowExceptions()
         {
-            Address newAdress = new Address("", "", AddressType.Unknown, "", "", "", "");
+
+            AddressCreateParams addressCreateParams = new AddressCreateParams();
+            addressCreateParams.AddressLine1 = "";
+            addressCreateParams.AddressLine2 = "";
+            addressCreateParams.AddressTypeParam = AddressType.Unknown;
+            addressCreateParams.City = "";
+            addressCreateParams.PostalCode = "";
+            addressCreateParams.State = "";
+            addressCreateParams.Country = "";
+            Address newAdress = new Address(addressCreateParams);
 
             var result = AddressValidator.ValidateAddress(newAdress);
 
@@ -56,16 +74,15 @@ namespace CustomerProj.Tests
             string state = new string('A', 21);
             string country = "Russia";
 
-            Address newAdress = new Address
-            (
-                addressLine1,
-                addressLine2,
-                AddressType.Shipping,
-                city,
-                postalCode,
-                state,
-                country
-            );
+            AddressCreateParams addressCreateParams = new AddressCreateParams();
+            addressCreateParams.AddressLine1 = addressLine1;
+            addressCreateParams.AddressLine2 = addressLine2;
+            addressCreateParams.AddressTypeParam = AddressType.Shipping;
+            addressCreateParams.City = city;
+            addressCreateParams.PostalCode = postalCode;
+            addressCreateParams.State = state;
+            addressCreateParams.Country = country;
+            Address newAdress = new Address(addressCreateParams);
 
             var result = AddressValidator.ValidateAddress(newAdress);
 

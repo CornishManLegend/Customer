@@ -36,11 +36,6 @@ namespace CustomerProj.Validators
                 errors.Add(ErrorMessages.AddressTypeException);
             }
 
-
-
-
-
-
             if (String.IsNullOrEmpty(address.City))
             {
                 errors.Add(ErrorMessages.CityIsRequiredException);
