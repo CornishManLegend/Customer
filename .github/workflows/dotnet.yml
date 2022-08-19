@@ -2,9 +2,9 @@ name: .Net
 
 on:
   push:
-    branches: [ master ]
+    branches: [ feat/FluentValidation ]
   pull_request:
-    branches: [ master ]
+    branches: [ feat/FluentValidation ]
 
 jobs:
   build:
