@@ -12,7 +12,7 @@ namespace CustomerProj.Entities
         public string AddressLine1;
         public string AddressLine2;
         public string City;
-        public AddressType AddressType;
+        public AddressType AddressTypeParam;
         public string PostalCode;
         public string State;
         public string Country;
@@ -21,7 +21,7 @@ namespace CustomerProj.Entities
         {
             AddressLine1 = addressCreateParams.AddressLine1;
             AddressLine2 = addressCreateParams.AddressLine2;
-            AddressType = addressCreateParams.AddressTypeParam;
+            AddressTypeParam = addressCreateParams.AddressTypeParam;
             City = addressCreateParams.City;
             PostalCode = addressCreateParams.PostalCode;
             State = addressCreateParams.State;

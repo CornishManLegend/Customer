@@ -9,8 +9,6 @@ namespace CustomerProj
     public class CustomerTests
     {
 
-        public CustomerValidator customerValidator = new CustomerValidator();
-
         [Fact]
         public void ShouldCreateCustomer()
         {
@@ -21,7 +19,7 @@ namespace CustomerProj
             addressCreateParams.AddressTypeParam = AddressType.Shipping;
             addressCreateParams.City = "Los Angeles";
             addressCreateParams.PostalCode = "90012";
-            addressCreateParams.State = "Mulholland Drive";
+            addressCreateParams.State = "California";
             addressCreateParams.Country = "USA";
             Address addressNumber1 = new Address(addressCreateParams);
 
@@ -42,6 +40,7 @@ namespace CustomerProj
                 TotalPurchasesAmount = 10
             };
 
+
             Assert.Equal("John", newCustomer.FirstName);
             Assert.Equal("Wayne", newCustomer.LastName);
             Assert.Equal(customerAddresses, newCustomer.Addresses);
@@ -51,14 +50,16 @@ namespace CustomerProj
             Assert.Equal(10, newCustomer.TotalPurchasesAmount);
         }
 
+
+
         [Fact]
         public void SetParametersOneWhenShouldThrowExceptions()
         {
+            CustomerValidator customerValidator = new CustomerValidator();
+
             string str = new string('A', 51);
 
-            
-
-        Customer customer = new Customer()
+            Customer customer = new Customer()
             {
                 FirstName = str,
                 LastName = str,
@@ -68,8 +69,8 @@ namespace CustomerProj
                 Notes = new List<string>{},
                 TotalPurchasesAmount = -1
             };
-            
-        var result = customerValidator.TestValidate(customer);
+
+            var result = customerValidator.TestValidate(customer);
 
             result.ShouldHaveValidationErrorFor(x => x.FirstName);
             result.ShouldHaveValidationErrorFor(x => x.LastName);
@@ -79,6 +80,63 @@ namespace CustomerProj
             result.ShouldHaveValidationErrorFor(x => x.Email);
             result.ShouldHaveValidationErrorFor(x => x.Notes);
             result.ShouldHaveValidationErrorFor(x => x.TotalPurchasesAmount);
+
+        }
+
+
+        [Fact]
+        public void SetParametersTwoWhenShouldThrowExceptions()
+        {
+            CustomerValidator customerValidator = new CustomerValidator();
+
+            AddressCreateParams addressCreateParams = new AddressCreateParams();
+            addressCreateParams.AddressLine1 = "";
+            addressCreateParams.AddressLine2 = "";
+            addressCreateParams.AddressTypeParam = AddressType.Unknown;
+            addressCreateParams.City = "";
+            addressCreateParams.PostalCode = "";
+            addressCreateParams.State = "";
+
+            Address addressNumber1 = new Address(addressCreateParams);
+
+            Customer customer = new Customer()
+            {
+                FirstName = "",
+                LastName = "",
+                Addresses = new List<Address>{ addressNumber1 },
+                PhoneNumber = "+123456789",
+                Email = "myMail@gmail.com",
+                Notes = new List<string> { "new note" },
+                TotalPurchasesAmount = 1
+            };
+
+            var result = customerValidator.TestValidate(customer);
+
+            result.ShouldHaveValidationErrorFor(x => x.LastName);
+            result.ShouldNotHaveValidationErrorFor(x => x.Addresses);
+
+        }
+
+        [Fact]
+        public void SetParametersThreeWhenShouldThrowExceptions()
+        {
+            CustomerValidator customerValidator = new CustomerValidator();
+
+            Customer customer = new Customer()
+            {
+                FirstName = "",
+                LastName = " ",
+                Addresses = new List<Address> {},
+                PhoneNumber = "+123456789",
+                Email = "myMail@gmail.com",
+                Notes = new List<string> { "new note" },
+                TotalPurchasesAmount = 1
+            };
+
+            var result = customerValidator.TestValidate(customer);
+
+            result.ShouldHaveValidationErrorFor(x => x.LastName);
+            result.ShouldHaveValidationErrorFor(x => x.Addresses);
 
         }
     }

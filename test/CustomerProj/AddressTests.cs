@@ -1,5 +1,6 @@
 ﻿using CustomerProj.Entities;
 using CustomerProj.Validators;
+using FluentValidation.TestHelper;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
@@ -39,6 +40,7 @@ namespace CustomerProj.Tests
         [Fact]
         public void SetParametersOneWhenShouldThrowExceptions()
         {
+            AddressValidator addressValidator = new AddressValidator();
 
             AddressCreateParams addressCreateParams = new AddressCreateParams();
             addressCreateParams.AddressLine1 = "";
@@ -50,22 +52,21 @@ namespace CustomerProj.Tests
             addressCreateParams.Country = "";
             Address newAdress = new Address(addressCreateParams);
 
-            var result = AddressValidator.ValidateAddress(newAdress);
+            var result = addressValidator.TestValidate(newAdress);
 
-            Assert.Equal(ErrorMessages.AddressLine1IsRequiredException, result[0]);
-            Assert.Equal(ErrorMessages.AddressTypeUnknownException, result[1]);
-            Assert.Equal(ErrorMessages.AddressTypeException, result[2]);
-            Assert.Equal(ErrorMessages.CityIsRequiredException, result[3]);
-            Assert.Equal(ErrorMessages.PostalCodeIsRequiredException, result[4]);
-            Assert.Equal(ErrorMessages.StateNameIsRequiredException, result[5]);
-            Assert.Equal(ErrorMessages.CountryNameIsRequiredException, result[6]);
-
+            result.ShouldHaveValidationErrorFor(x => x.AddressLine1);
+            result.ShouldHaveValidationErrorFor(x => x.AddressTypeParam);
+            result.ShouldHaveValidationErrorFor(x => x.City);
+            result.ShouldHaveValidationErrorFor(x => x.PostalCode);
+            result.ShouldHaveValidationErrorFor(x => x.State);
+            result.ShouldHaveValidationErrorFor(x => x.Country);
         }
 
 
         [Fact]
         public void SetParametersTwoWhenShouldThrowExceptions()
         {
+            AddressValidator addressValidator = new AddressValidator();
 
             string addressLine1 = new string('A', 101);
             string addressLine2 = new string('A', 101);
@@ -84,14 +85,14 @@ namespace CustomerProj.Tests
             addressCreateParams.Country = country;
             Address newAdress = new Address(addressCreateParams);
 
-            var result = AddressValidator.ValidateAddress(newAdress);
+            var result = addressValidator.TestValidate(newAdress);
 
-            Assert.Equal(ErrorMessages.AddressLine1MaxLenghtException, result[0]);
-            Assert.Equal(ErrorMessages.AddressLine2MaxLenghtException, result[1]);
-            Assert.Equal(ErrorMessages.CityMaxLenghtException, result[2]);
-            Assert.Equal(ErrorMessages.PostalCodeMaxLenghtException, result[3]);
-            Assert.Equal(ErrorMessages.StateNameMaxLenghtException, result[4]);
-            Assert.Equal(ErrorMessages.InvalidCountryName, result[5]);
+            result.ShouldHaveValidationErrorFor(x => x.AddressLine1);
+            result.ShouldHaveValidationErrorFor(x => x.AddressLine2);
+            result.ShouldHaveValidationErrorFor(x => x.City);
+            result.ShouldHaveValidationErrorFor(x => x.PostalCode);
+            result.ShouldHaveValidationErrorFor(x => x.State);
+            result.ShouldHaveValidationErrorFor(x => x.Country);
 
         }
 

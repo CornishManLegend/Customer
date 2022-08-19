@@ -1,4 +1,5 @@
 ﻿using CustomerProj.Entities;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,75 +8,40 @@ using System.Threading.Tasks;
 
 namespace CustomerProj.Validators
 {
-    public class AddressValidator
+    public class AddressValidator : AbstractValidator<Address>
     {
-        public static List<string> ValidateAddress(Address address)
+        public AddressValidator()
         {
-            List<string> errors = new List<string>();
+            RuleFor(c => c.AddressLine1)
+                .NotEmpty().WithMessage(ErrorMessages.AddressLine1IsRequiredException)
+                .MaximumLength(100).WithMessage(ErrorMessages.AddressLine1MaxLenghtException);
 
-            if (String.IsNullOrEmpty(address.AddressLine1))
-            {
-                errors.Add(ErrorMessages.AddressLine1IsRequiredException);
-            }
-            if (address.AddressLine1.Length > 100)
-            {
-                errors.Add(ErrorMessages.AddressLine1MaxLenghtException);
-            }
-            if (address.AddressLine2 != null && address.AddressLine2.Length > 100)
-            {
-                errors.Add(ErrorMessages.AddressLine2MaxLenghtException);
-            }
+            RuleFor(c => c.AddressLine2)
+                .MaximumLength(100).WithMessage(ErrorMessages.AddressLine2MaxLenghtException);
 
+            RuleFor(c => c.AddressTypeParam)
+                .NotEqual(AddressType.Unknown).WithMessage(ErrorMessages.AddressTypeUnknownException)
+                .Equal(AddressType.Shipping).WithMessage(ErrorMessages.AddressTypeException)
+                .Equal(AddressType.Billing).WithMessage(ErrorMessages.AddressTypeException);
 
-            if(address.AddressType == AddressType.Unknown)
-            {
-                errors.Add(ErrorMessages.AddressTypeUnknownException);
-            }
-            if (!(address.AddressType == AddressType.Shipping || address.AddressType == AddressType.Billing))
-            {
-                errors.Add(ErrorMessages.AddressTypeException);
-            }
+            RuleFor(c => c.City)
+                .NotEmpty().WithMessage(ErrorMessages.CityIsRequiredException)
+                .MaximumLength(50).WithMessage(ErrorMessages.CityMaxLenghtException);
 
-            if (String.IsNullOrEmpty(address.City))
-            {
-                errors.Add(ErrorMessages.CityIsRequiredException);
-            }
-            if (address.City.Length > 50)
-            {
-                errors.Add(ErrorMessages.CityMaxLenghtException);
-            }
-            if (String.IsNullOrEmpty(address.PostalCode))
-            {
-                errors.Add(ErrorMessages.PostalCodeIsRequiredException);
-            }
-            if (address.PostalCode.Length > 6)
-            {
-                errors.Add(ErrorMessages.PostalCodeMaxLenghtException);
-            }
-            if (String.IsNullOrEmpty(address.State))
-            {
-                errors.Add(ErrorMessages.StateNameIsRequiredException);
-            }
-            if (address.State.Length > 20)
-            {
-                errors.Add(ErrorMessages.StateNameMaxLenghtException);
-            }
-            if (String.IsNullOrEmpty(address.Country))
-            {
-                errors.Add(ErrorMessages.CountryNameIsRequiredException);
-            }
-            if (address.Country != "USA")
-            {
-                errors.Add(ErrorMessages.InvalidCountryName);
-            }
-            if (address.Country != "Canada")
-            {
-                errors.Add(ErrorMessages.InvalidCountryName);
-            }
+            RuleFor(c => c.PostalCode)
+                .NotEmpty().WithMessage(ErrorMessages.PostalCodeIsRequiredException)
+                .MaximumLength(6).WithMessage(ErrorMessages.PostalCodeMaxLenghtException);
 
-            return errors;
+            RuleFor(c => c.State)
+                .NotEmpty().WithMessage(ErrorMessages.StateNameIsRequiredException)
+                .MaximumLength(20).WithMessage(ErrorMessages.StateNameMaxLenghtException);
+
+            RuleFor(c => c.Country)
+                .NotEmpty().WithMessage(ErrorMessages.CountryNameIsRequiredException)
+                .Equal("USA").WithMessage(ErrorMessages.InvalidCountryName)
+                .Equal("Canada").WithMessage(ErrorMessages.InvalidCountryName);
+
         }
-
 
     }
 }
