@@ -8,17 +8,17 @@ namespace CustomerProj.Entities
 {
     public class Address
     {
-        public string AddressLine { get; set; } = String.Empty;
-        public string AddressLine2 { get; set; } = String.Empty;
-        public string City { get; set; } = String.Empty;
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string City { get; set; }
         public AddressType AddressType { get; set; } = AddressType.Unknown;
-        public string PostalCode { get; set; } = String.Empty;
-        public string State { get; set; } = String.Empty;
-        public string Country { get; set; } = String.Empty;
+        public string PostalCode { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
 
         public Address(string addressLine, string addressLine2, AddressType addressType, string city, string postalCode, string state, string country)
         {
-            AddressLine = addressLine;
+            AddressLine1 = addressLine;
             AddressLine2 = addressLine2;
             AddressType = addressType;
             City = city;
