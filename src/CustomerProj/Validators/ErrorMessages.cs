@@ -17,7 +17,7 @@ namespace CustomerProj.Validators
         public const string IncorrectEmailNumberFormat = "Incorrect the email format";
         public const string NotesMissingException = "Notes are missing";
         public const string NotesNotEnoughException = "The required number of notes are missing";
-        public const string IncorrectTotalPurchasesAmountFormat = "The value of the total number of purchases is erroneous";
+        public const string IncorrectTotalPurchasesAmountValue = "The value of the total number of purchases is erroneous";
 
         public const string AddressLine1IsRequiredException = "Address line 1 is required";
         public const string AddressLine1MaxLenghtException = "Exceeded the length of the AddressLine1 in 100 characters";

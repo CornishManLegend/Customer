@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using CustomerProj.Entities;
 using CustomerProj.Validators;
+using FluentValidation.TestHelper;
 
 namespace CustomerProj
 {
     public class CustomerTests
     {
+        private CustomerValidator customerValidator = new CustomerValidator();
+
+
         [Fact]
         public void ShouldCreateCustomer()
         {
@@ -48,41 +52,19 @@ namespace CustomerProj
                 Addresses = new List<Address>(),
                 PhoneNumber = "+1508dfgdfg78682dfgfdgdf",
                 Email = "myMail",
-                Notes = new List<string> {},
+                Notes = new List<string> { },
                 TotalPurchasesAmount = -1
             };
-            var result = CustomerValidator.CustomerValidate(customer);
+            var result = customerValidator.TestValidate(customer);
 
-            Assert.Equal(ErrorMessages.FirstNameMaxLenghtException, result[0]);
-            Assert.Equal(ErrorMessages.LastNameMaxLenghtException, result[1]);
-            Assert.Equal(ErrorMessages.AddressNotEnoughException, result[2]);
-            Assert.Equal(ErrorMessages.IncorrectPhoneNumberFormat, result[3]);
-            Assert.Equal(ErrorMessages.IncorrectEmailNumberFormat, result[4]);
-            Assert.Equal(ErrorMessages.NotesNotEnoughException, result[5]);
-            Assert.Equal(ErrorMessages.IncorrectTotalPurchasesAmountFormat, result[6]);
-
-        }
-
-        [Fact]
-        public void SetParametersTwoWhenShouldThrowExceptions()
-        {
-
-            Customer customer1 = new Customer()
-            {
-                FirstName = "John",
-                LastName = "",
-                Addresses = new List<Address>(),
-                PhoneNumber = "+123456789",
-                Email = "myMail@gmail.com",
-                Notes = new List<string> { "new note" },
-                TotalPurchasesAmount = 1
-            };
-            var result = CustomerValidator.CustomerValidate(customer1);
-
-            Assert.Equal(ErrorMessages.LastNameIsRequiredException, result[0]);
-            Assert.Equal(ErrorMessages.AddressNotEnoughException, result[1]);
+            result.ShouldHaveValidationErrorFor(x => x.FirstName);
+            result.ShouldHaveValidationErrorFor(x => x.LastName);
+            result.ShouldHaveValidationErrorFor(x => x.LastName);
+            result.ShouldHaveValidationErrorFor(x => x.Addresses);
+            result.ShouldHaveValidationErrorFor(x => x.PhoneNumber);
+            result.ShouldHaveValidationErrorFor(x => x.Email);
+            result.ShouldHaveValidationErrorFor(x => x.Notes);
 
         }
-
     }
 }
